@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 [RequireComponent(typeof(Stats))]
 
-public class FillSlider : MonoBehaviour
+public class InterfaceReview : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _healthPointsText;
     [SerializeField] private TextMeshProUGUI _healButtonText;
@@ -34,21 +34,16 @@ public class FillSlider : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _slider.value = Mathf.MoveTowards(_slider.value, _stats.CurrentHelth, _deltaFill);
-        _healthPointsText.text = $"{_stats.MaxHealth}/{Mathf.Round(_slider.value)}";
+        if (_slider.value != _stats.CurrentHelth)
+        {
+            _slider.value = Mathf.MoveTowards(_slider.value, _stats.CurrentHelth, _deltaFill);
+            _healthPointsText.text = $"{_stats.MaxHealth}/{Mathf.Round(_slider.value)}";
+        }
     }
 
     private void OnValidate()
     {
         float minPercent = 0;
-
-        if (_percentInSecond > MaxPercent)
-        {
-            _percentInSecond = MaxPercent;
-        }
-        else if (_percentInSecond < minPercent)
-        {
-            _percentInSecond = minPercent;
-        }
+        _percentInSecond = Mathf.Clamp(_percentInSecond, minPercent, MaxPercent);
     }
 }

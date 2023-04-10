@@ -25,15 +25,7 @@ public class Stats : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_percent > MaxPercent)
-        {
-            _percent = MaxPercent;
-        }
-        else if (_percent < MinPercent)
-        {
-            _percent = MinPercent;
-        }
-
+        _percent = Mathf.Clamp(_percent, MinPercent, MaxPercent);
         _step = _maxHealth / MaxPercent * _percent;
     }
 
