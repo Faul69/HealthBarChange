@@ -304,6 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 157520754}
   - component: {fileID: 157520755}
+  - component: {fileID: 157520757}
   - component: {fileID: 157520756}
   m_Layer: 5
   m_Name: Slider
@@ -380,7 +381,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 2
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -401,7 +402,22 @@ MonoBehaviour:
   _healthPointsText: {fileID: 1180501368}
   _healButtonText: {fileID: 1572231176}
   _damageButtonText: {fileID: 283522067}
-  _stepChange: 5
+  _percent: 10
+  _minHealth: 0
+  _maxHealth: 100
+--- !u!114 &157520757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157520753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d176e1e6d817ad48ae096853da50dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _percentInSecond: 50
 --- !u!1 &187535138
 GameObject:
   m_ObjectHideFlags: 0
