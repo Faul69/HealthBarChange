@@ -1,15 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class Stats : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _healthPointsText;
-    [SerializeField] private TextMeshProUGUI _healButtonText;
-    [SerializeField] private TextMeshProUGUI _damageButtonText;
     [SerializeField] private float _percent;
-    [SerializeField] private float _minHealth;
     [SerializeField] private float _maxHealth;
 
     private const float MaxPercent = 100f;
@@ -18,14 +13,14 @@ public class Stats : MonoBehaviour
     private float _step;
 
     public float CurrentHelth { get; private set; }
+    public float MinHealth { get; private set; }
     public float MaxHealth => _maxHealth;
-    public float MinHealth => _minHealth;
 
     private void OnEnable()
     {
+        MinHealth = 0f;
         CurrentHelth = _maxHealth;
         _step = _maxHealth / MaxPercent * _percent;
-        ShowInfo();
     }
 
     private void OnValidate()
@@ -46,20 +41,11 @@ public class Stats : MonoBehaviour
     {
         if (isDamage)
         {
-            CurrentHelth = Mathf.MoveTowards(CurrentHelth, _minHealth, _step);
+            CurrentHelth = Mathf.MoveTowards(CurrentHelth, MinHealth, _step);
         }
         else
         {
             CurrentHelth = Mathf.MoveTowards(CurrentHelth, _maxHealth, _step);
         }
-
-        ShowInfo();
-    }
-
-    private void ShowInfo()
-    {
-        _healthPointsText.text = $"{_maxHealth}/{Mathf.Round(CurrentHelth)}";
-        _healButtonText.text = $"Вылечить на {_percent}%";
-        _damageButtonText.text = $"Навредить на {_percent}%";
     }
 }

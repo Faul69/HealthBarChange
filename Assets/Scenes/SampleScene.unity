@@ -399,12 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b5abca638ab2346b0a3ef73629c338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthPointsText: {fileID: 1180501368}
-  _healButtonText: {fileID: 1572231176}
-  _damageButtonText: {fileID: 283522067}
   _percent: 10
-  _minHealth: 0
-  _maxHealth: 100
+  _maxHealth: 500
 --- !u!114 &157520757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,7 +413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d176e1e6d817ad48ae096853da50dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _percentInSecond: 50
+  _healthPointsText: {fileID: 1180501368}
+  _healButtonText: {fileID: 1572231176}
+  _damageButtonText: {fileID: 283522067}
+  _percentInSecond: 25
 --- !u!1 &187535138
 GameObject:
   m_ObjectHideFlags: 0
