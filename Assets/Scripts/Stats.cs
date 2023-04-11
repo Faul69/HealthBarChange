@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Stats : MonoBehaviour
 {
-    [SerializeField] private float _percent;
     [SerializeField] private float _maxHealth;
-
-    private const float MaxPercent = 100f;
-    private const float MinPercent = 0;
-
-    private float _step;
+    [SerializeField] private UnityEvent _clicked;
 
     public float CurrentHelth { get; private set; }
     public float MinHealth { get; private set; }
@@ -20,24 +16,17 @@ public class Stats : MonoBehaviour
     {
         MinHealth = 0f;
         CurrentHelth = _maxHealth;
-        _step = _maxHealth / MaxPercent * _percent;
     }
 
-    private void OnValidate()
+    public void Damage(float damagePoints)
     {
-        _percent = Mathf.Clamp(_percent, MinPercent, MaxPercent);
-        _step = _maxHealth / MaxPercent * _percent;
+        CurrentHelth = Mathf.MoveTowards(CurrentHelth, MinHealth, damagePoints);
+        _clicked.Invoke();
     }
 
-    public void DamageOrHeal(bool isDamage)
+    public void Heal(float healPoints)
     {
-        if (isDamage)
-        {
-            CurrentHelth = Mathf.MoveTowards(CurrentHelth, MinHealth, _step);
-        }
-        else
-        {
-            CurrentHelth = Mathf.MoveTowards(CurrentHelth, _maxHealth, _step);
-        }
+        CurrentHelth = Mathf.MoveTowards(CurrentHelth, _maxHealth, healPoints);
+        _clicked.Invoke();
     }
 }

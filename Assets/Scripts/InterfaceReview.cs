@@ -16,12 +16,14 @@ public class InterfaceReview : MonoBehaviour
 
     private const float MaxPercent = 100f;
 
+    private WaitForSeconds _wait;
     private Slider _slider;
     private Stats _stats;
     private float _deltaFill;
 
     private void OnEnable()
     {
+        _wait = new WaitForSeconds(Time.fixedDeltaTime);
         _slider = GetComponent<Slider>();
         _stats = GetComponent<Stats>();
         _slider.maxValue = _stats.MaxHealth;
@@ -32,18 +34,24 @@ public class InterfaceReview : MonoBehaviour
         _damageButtonText.text = $"Навредить";
     }
 
-    private void FixedUpdate()
-    {
-        if (_slider.value != _stats.CurrentHelth)
-        {
-            _slider.value = Mathf.MoveTowards(_slider.value, _stats.CurrentHelth, _deltaFill);
-            _healthPointsText.text = $"{_stats.MaxHealth}/{Mathf.Round(_slider.value)}";
-        }
-    }
-
     private void OnValidate()
     {
         float minPercent = 0;
         _percentInSecond = Mathf.Clamp(_percentInSecond, minPercent, MaxPercent);
+    }
+
+    public void StartRoutine()
+    {
+        StartCoroutine(routine: ChangeValues());
+    }
+
+    private IEnumerator ChangeValues()
+    {
+        while (_slider.value != _stats.CurrentHelth)
+        {
+            _slider.value = Mathf.MoveTowards(_slider.value, _stats.CurrentHelth, _deltaFill);
+            _healthPointsText.text = $"{_stats.MaxHealth}/{Mathf.Round(_slider.value)}";
+            yield return _wait;
+        }
     }
 }
