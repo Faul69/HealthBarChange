@@ -206,19 +206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 93046122}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 157520756}
-        m_TargetAssemblyTypeName: Stats, Assembly-CSharp
-        m_MethodName: Damage
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 15
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &93046122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,21 +388,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  _clicked:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 157520757}
-        m_TargetAssemblyTypeName: InterfaceReview, Assembly-CSharp
-        m_MethodName: StartRoutine
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  _damagePoints: 15
+  _healPoints: 10
+  _damageButton: {fileID: 93046121}
+  _healbutton: {fileID: 2002121032}
 --- !u!114 &157520757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,8 +405,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthPointsText: {fileID: 1180501368}
-  _healButtonText: {fileID: 1572231176}
-  _damageButtonText: {fileID: 283522067}
+  _heal: {fileID: 2002121032}
+  _damage: {fileID: 93046121}
   _percentInSecond: 50
 --- !u!1 &187535138
 GameObject:
@@ -1612,19 +1589,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2002121033}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 157520756}
-        m_TargetAssemblyTypeName: Stats, Assembly-CSharp
-        m_MethodName: Heal
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 10
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2002121033
 MonoBehaviour:
   m_ObjectHideFlags: 0

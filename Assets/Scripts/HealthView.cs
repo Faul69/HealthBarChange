@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Slider))]
 [RequireComponent(typeof(Stats))]
 
-public class InterfaceReview : MonoBehaviour
+public class HealthView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _healthPointsText;
-    [SerializeField] private TextMeshProUGUI _healButtonText;
-    [SerializeField] private TextMeshProUGUI _damageButtonText;
+    [SerializeField] private Button _heal;
+    [SerializeField] private Button _damage;
     [SerializeField] private float _percentInSecond;
 
     private const float MaxPercent = 100f;
 
+    private UnityAction _onPress;
     private WaitForSeconds _wait;
     private Slider _slider;
     private Stats _stats;
@@ -29,9 +31,13 @@ public class InterfaceReview : MonoBehaviour
         _slider.maxValue = _stats.MaxHealth;
         _slider.minValue = _stats.MinHealth;
         _slider.value = _slider.maxValue;
+        _healthPointsText.text = $"{_stats.MaxHealth}/{Mathf.Round(_slider.value)}";
         _deltaFill = _slider.maxValue / MaxPercent * _percentInSecond * Time.fixedDeltaTime;
-        _healButtonText.text = $"Вылечить";
-        _damageButtonText.text = $"Навредить";
+
+
+        _onPress += StartRoutine;
+        TuneButton(_damage, true);
+        TuneButton(_heal, false);
     }
 
     private void OnValidate()
@@ -40,7 +46,7 @@ public class InterfaceReview : MonoBehaviour
         _percentInSecond = Mathf.Clamp(_percentInSecond, minPercent, MaxPercent);
     }
 
-    public void StartRoutine()
+    private void StartRoutine()
     {
         StartCoroutine(routine: ChangeValues());
     }
@@ -53,5 +59,15 @@ public class InterfaceReview : MonoBehaviour
             _healthPointsText.text = $"{_stats.MaxHealth}/{Mathf.Round(_slider.value)}";
             yield return _wait;
         }
+    }
+
+    private void TuneButton(Button button, bool isDamage)
+    {
+        button.onClick.AddListener(_onPress);
+
+        if (isDamage)
+            button.GetComponentInChildren<TextMeshProUGUI>().text = "Навредить";
+        else
+            button.GetComponentInChildren<TextMeshProUGUI>().text = "Вылечить";
     }
 }
