@@ -6,38 +6,32 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Slider))]
-[RequireComponent(typeof(Stats))]
+[RequireComponent(typeof(Health))]
 
 public class HealthView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _healthPointsText;
-    [SerializeField] private Button _heal;
-    [SerializeField] private Button _damage;
     [SerializeField] private float _percentInSecond;
 
     private const float MaxPercent = 100f;
 
-    private UnityAction _onPress;
+    private Coroutine _routine;
     private WaitForSeconds _wait;
     private Slider _slider;
-    private Stats _stats;
+    private Health _stats;
     private float _deltaFill;
 
     private void OnEnable()
     {
         _wait = new WaitForSeconds(Time.fixedDeltaTime);
         _slider = GetComponent<Slider>();
-        _stats = GetComponent<Stats>();
+        _stats = GetComponent<Health>();
+        _stats.Changed += StartRoutine;
         _slider.maxValue = _stats.MaxHealth;
         _slider.minValue = _stats.MinHealth;
         _slider.value = _slider.maxValue;
         _healthPointsText.text = $"{_stats.MaxHealth}/{Mathf.Round(_slider.value)}";
         _deltaFill = _slider.maxValue / MaxPercent * _percentInSecond * Time.fixedDeltaTime;
-
-
-        _onPress += StartRoutine;
-        TuneButton(_damage, true);
-        TuneButton(_heal, false);
     }
 
     private void OnValidate()
@@ -46,9 +40,19 @@ public class HealthView : MonoBehaviour
         _percentInSecond = Mathf.Clamp(_percentInSecond, minPercent, MaxPercent);
     }
 
+    private void OnDisable()
+    {
+        _stats.Changed -= StartRoutine;
+    }
+
     private void StartRoutine()
     {
-        StartCoroutine(routine: ChangeValues());
+        if (_routine != null)
+        {
+            StopCoroutine(_routine);
+        }
+
+        _routine = StartCoroutine(routine: ChangeValues());
     }
 
     private IEnumerator ChangeValues()
@@ -59,15 +63,5 @@ public class HealthView : MonoBehaviour
             _healthPointsText.text = $"{_stats.MaxHealth}/{Mathf.Round(_slider.value)}";
             yield return _wait;
         }
-    }
-
-    private void TuneButton(Button button, bool isDamage)
-    {
-        button.onClick.AddListener(_onPress);
-
-        if (isDamage)
-            button.GetComponentInChildren<TextMeshProUGUI>().text = "Навредить";
-        else
-            button.GetComponentInChildren<TextMeshProUGUI>().text = "Вылечить";
     }
 }
